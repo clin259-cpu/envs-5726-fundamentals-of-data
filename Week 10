@@ -1,0 +1,39 @@
+CREATE TABLE five_million_trees_cleaned (most_recent_observation date, common_name varchar, scientfic_name varchar, city varchar, state varchar, location_type varchar, diameter_breast_height_CM double precision, condition varchar, native varchar);
+ALTER TABLE five_million_trees_cleaned
+RENAME COLUMN scientfic_name TO scientific_name;
+SELECT COUNT(*) FROM five_million_trees_cleaned;
+SELECT COUNT(*) FROM five_million_trees_cleaned
+WHERE state = 'Ohio'
+AND scientific_name LIKE 'Acer%'; 
+
+SELECT COUNT(*) FROM five_million_trees_cleaned
+WHERE common_name LIKE '%Turkey%'
+OR common_name LIKE '%Turkish%'; 
+
+SELECT DISTINCT(state) FROM five_million_trees_cleaned
+WHERE common_name LIKE '%Ironwood%'
+OR common_name LIKE '%ironwood%';
+
+SELECT COUNT(*) FROM five_million_trees_cleaned
+WHERE city = 'Kailua'
+AND most_recent_observation < '2018-01-01';
+
+SELECT COUNT(*) FROM five_million_trees_cleaned 
+WHERE native = 'naturally_occurring'
+AND condition = 'good';
+
+SELECT AVG(diameter_breast_height_CM)
+FROM five_million_trees_cleaned
+WHERE scientific_name LIKE 'Pinus%';
+
+SELECT MAX(most_recent_observation)
+FROM five_million_trees_cleaned
+WHERE condition = 'dead';
+
+SELECT 
+	(SELECT COUNT(*) FROM five_million_trees_cleaned
+	WHERE location_type = 'green_space') * 1.0 /
+	(SELECT COUNT(*) FROM five_million_trees_cleaned
+	WHERE location_type = 'built_environment');
+
+
